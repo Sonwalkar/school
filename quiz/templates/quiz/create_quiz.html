@@ -1,6 +1,9 @@
 {% extends "quiz/layout.html" %}
 
 {% block body %}
+<div class="alert alert-danger" role="alert">
+    Create quiz only if you are <strong>School</strong> or <strong>Teacher</strong> account!
+  </div>
     <form action="{% url 'create_quiz' %}", method="post">
         {% csrf_token %}
         <div class="form-group">

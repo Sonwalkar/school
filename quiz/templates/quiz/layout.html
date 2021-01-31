@@ -24,11 +24,10 @@
         </li>
 
         {% if user.is_authenticated %}
-            {% if request.user.is_superuser %}
+            
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'create_quiz' %}">Create Quiz</a>
                 </li>
-            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'record' %}">Records</a>
             </li>

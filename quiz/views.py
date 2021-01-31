@@ -68,18 +68,15 @@ def register(request):
 
 def create_quiz(request):
     if request.method == "POST":
-        # Ensure is request from Superuser 
-        if request.user.is_superuser:
-            # only superuser can add quizes
-            number_of_questions = request.POST.get("numberOfQuestion")
-            category = request.POST.get("category")
-            difficulty = request.POST.get("difficulty")
-            type_of_question = request.POST.get("type")
+        number_of_questions = request.POST.get("numberOfQuestion")
+        category = request.POST.get("category")
+        difficulty = request.POST.get("difficulty")
+        type_of_question = request.POST.get("type")
 
-            createQ = CreateQuiz(user=request.user, number_of_questions=number_of_questions, category=category, difficulty=difficulty, type_of_question=type_of_question)
-            createQ.save()
+        createQ = CreateQuiz(user=request.user, number_of_questions=number_of_questions, category=category, difficulty=difficulty, type_of_question=type_of_question)
+        createQ.save()
 
-            return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("index"))
     return render(request, "quiz/create_quiz.html")
 
 
