@@ -1,0 +1,84 @@
+{% extends "quiz/layout.html" %}
+
+{% block body %}
+
+
+<div style="margin: 20px;">
+     <p id="result" style="margin: auto; padding: 10px; text-align: center;" ></p>  </p>
+    {% for i in questions.results %}
+        <h4>Q. {{ i.question }}</h4>
+        <div style="margin-left: 30px;">
+            {% if i.type == 'multiple' %}
+                <input type="checkbox"  value="{{ i.correct_answer }}" onchange='correct(this);' id='corr'> {{ i.correct_answer }}<br>
+                
+                {% for j in i.incorrect_answers %}
+                <input type="checkbox" value="incorrect" onchange="incorrect(this)" > {{ j }}<br>
+                {% endfor %}
+            {% endif %}
+
+            {% if i.type == 'boolean' %}
+                <input type="radio" name="answer" value="{{i.correct_answer}}" onchange='correct(this);' id="corr"> {{ i.correct_answer }}<br>
+                {% for j in i.incorrect_answers %}
+                <input type="radio" name="answer" value="incorrect" onchange="incorrect(this);"> {{ j }}<br>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+    <br>
+        
+    {% endfor %}
+    <p id="result" style="margin: auto; padding: 10px; text-align: center;" ></p>  </p>
+    {% for i in quiz_details %}
+        <form action="{% url 'quiz_page' i.id  %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-secondary" name="record" value="record" onclick="time_taken()">Submit and Save questions and answers</button>
+        </form><br>
+        <form action="{% url 'quiz_page' i.id  %}" method="post">
+        {% csrf_token %}
+        <input class="btn btn-primary" type="submit" value="Submit" onclick="time_taken()">
+    </form>
+{% endfor %}
+
+</div>
+<script>
+    
+    var start, end, score=0;
+    window.onload = function(){
+        let d = new Date()
+        start = d.getSeconds();
+    }
+
+    function time_taken(){
+        let d = new Date()
+        end = d.getSeconds();
+        const str = end-start + " seconds to complete quiz and your score is " + score
+        alert(str);
+    }
+
+    function correct(checkbox){
+        if(checkbox.checked == true){
+            score += 1
+            document.getElementById("result").style.display="block";
+            document.getElementById("result").style.backgroundColor = "#198754";
+            document.getElementById("result").style.padding = "10px";
+            document.getElementById("result").innerHTML = "Correct Answer";
+        }
+        else{
+            score -= 1
+            document.getElementById("result").style.display="None";
+        }
+    }
+
+    function incorrect(checkbox){
+        if(checkbox.checked == true){
+            document.getElementById("result").style.display="block";
+            document.getElementById("result").style.backgroundColor = "#dc3545";
+            document.getElementById("result").style.padding = "10px";
+            document.getElementById("result").innerHTML = " Incorrect answer, correct answer is first option";
+        }
+        else{
+            document.getElementById("result").style.display="None";
+        }
+    }
+</script>
+{% endblock %}

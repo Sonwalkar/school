@@ -1,0 +1,29 @@
+{% extends "quiz/layout.html" %}
+
+{% block body %}
+
+
+<div style="margin: 20px;">
+    {% for i in questions.results %}
+        <h4>Q. {{ i.question }}</h4>
+        <div style="margin-left: 30px;">
+            {% if i.type == 'multiple' %}
+                <font color="green"> {{ i.correct_answer }}</font><br>
+                
+                {% for j in i.incorrect_answers %}
+                <font>{{ j }}</font><br>
+                {% endfor %}
+            {% endif %}
+
+            {% if i.type == 'boolean' %}
+                <font color="green">{{ i.correct_answer }}</font><br>
+                {% for j in i.incorrect_answers %}
+                <font>{{ j }}</font><br>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+    <br>
+        
+    {% endfor %}
+    {% endblock %}

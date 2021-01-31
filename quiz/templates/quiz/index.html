@@ -1,0 +1,25 @@
+{% extends "quiz/layout.html" %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row row-cols-3">
+    {% for i in quiz %}
+    
+    <div class="card col mx-auto shadow-lg p-3 mb-5 bg-white rounded" style="max-width: 18rem; height: 14rem; margin: 20px; padding-top: 20px;">
+        <div class="card-body">
+          <center>
+          <h5 class="card-title">Quiz</h5>
+          
+          <p class="card-text">Category: {{ i.category.capitalize }}</p>
+          <p class="card-text">Created By: {{ i.user.username.capitalize }}</p>
+          <a href="{% url 'quiz_page' i.id %}" class="btn btn-primary">Start Quiz</a>
+        </center>
+        </div>
+
+    </div>
+        
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
